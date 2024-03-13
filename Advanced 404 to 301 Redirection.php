@@ -1,17 +1,17 @@
 <?php
 /**
-* Plugin Name: Advanced 404 to 301 Redirection
-* Plugin URI: N/A
-* Description: Redirects 404 errors to specified URLs using 301 redirects and logs the redirections.
-* Version: 1.2
-* Author: Tarmo Trubetski
-* Author URI: N/A
-* Requires at least: WordPress 4.7
-* Tested up to: WordPress 5.4
-* Stable tag: 4.3
-* Requires PHP: 7.0
-* License: GPLv2 or later
-* License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Plugin Name: Advanced 404 to 301 Redirection
+ * Plugin URI: https://github.com/lyhiz/Advanced-404-to-301-Redirection
+ * Description: Redirects 404 errors to specified URLs using 301 redirects and logs the redirections.
+ * Version: 1.2
+ * Author: Tarmo Trubetski
+ * Author URI: https://www.facebook.com/tarmo.trubetski
+ * Requires at least: WordPress 4.7
+ * Tested up to: WordPress 5.4
+ * Stable tag: 1.2
+ * Requires PHP: 7.0
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('ABSPATH') or die('No script kiddies please!');
