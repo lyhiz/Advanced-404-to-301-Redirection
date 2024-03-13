@@ -12,6 +12,8 @@
  * Requires PHP: 7.0
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * 
+ * Short Description: Redirects 404 errors to specified URLs using 301 redirects and logs the redirections.
  */
 
 defined('ABSPATH') or die('No script kiddies please!');
@@ -24,7 +26,7 @@ add_action('admin_menu', 'advanced_404_to_301_menu');
 
 // Settings page content
 function advanced_404_to_301_settings_page() {
-    if (isset($_POST['clear_log'])) {
+    if (isset($_POST['clear_log']) && check_admin_referer('advanced-404-to-301-clear-log')) {
         advanced_404_to_301_clear_log();
     }
     ?>
@@ -39,7 +41,11 @@ function advanced_404_to_301_settings_page() {
                     <td><input type="text" name="advanced_404_to_301_redirect_url" value="<?php echo esc_url(get_option('advanced_404_to_301_redirect_url')); ?>" /></td>
                 </tr>
             </table>
-            <?php submit_button(); ?>
+            <?php
+            // Add nonce field for form submission security
+            wp_nonce_field('advanced-404-to-301-settings-save', 'advanced_404_to_301_nonce');
+            submit_button();
+            ?>
         </form>
 
         <hr>
@@ -55,8 +61,11 @@ function advanced_404_to_301_settings_page() {
         </form>
 
         <form method="post">
-            <?php wp_nonce_field('advanced-404-to-301-clear-log'); ?>
-            <?php submit_button('Clear Log', 'secondary', 'clear_log', false); ?>
+            <?php
+            // Add nonce field for form submission security
+            wp_nonce_field('advanced-404-to-301-clear-log', 'advanced_404_to_301_log_nonce');
+            submit_button('Clear Log', 'secondary', 'clear_log', false);
+            ?>
         </form>
     </div>
     <?php
@@ -66,13 +75,20 @@ function advanced_404_to_301_settings_page() {
 function advanced_404_to_301_clear_log() {
     if (check_admin_referer('advanced-404-to-301-clear-log')) {
         $log_file = plugin_dir_path(__FILE__) . 'redirect_log.txt';
-        file_put_contents($log_file, ''); // Clear the log file
+        WP_Filesystem();
+        global $wp_filesystem;
+        $wp_filesystem->put_contents($log_file, ''); // Clear the log file
     }
 }
 
 // Register and sanitize settings
 function advanced_404_to_301_settings_init() {
     register_setting('advanced-404-to-301-settings-group', 'advanced_404_to_301_redirect_url', 'esc_url');
+
+    // Add nonce verification for form submission security
+    if (isset($_POST['submit']) && check_admin_referer('advanced-404-to-301-settings-save', 'advanced_404_to_301_nonce')) {
+        // Process form data here
+    }
 }
 add_action('admin_init', 'advanced_404_to_301_settings_init');
 
@@ -89,7 +105,9 @@ function advanced_404_to_301_redirect() {
 
             // Append log entry to the log file
             $log_file = plugin_dir_path(__FILE__) . 'redirect_log.txt';
-            file_put_contents($log_file, $log_entry . PHP_EOL, FILE_APPEND);
+            WP_Filesystem();
+            global $wp_filesystem;
+            $wp_filesystem->put_contents($log_file, $log_entry . PHP_EOL, FILE_APPEND);
 
             exit();
         }
@@ -99,13 +117,16 @@ add_action('template_redirect', 'advanced_404_to_301_redirect');
 
 // Log page content
 function advanced_404_to_301_log_page() {
-    if (isset($_POST['clear_log'])) {
+    if (isset($_POST['clear_log']) && check_admin_referer('advanced-404-to-301-clear-log', 'advanced_404_to_301_log_nonce')) {
         advanced_404_to_301_clear_log();
     }
 
     $log_file = plugin_dir_path(__FILE__) . 'redirect_log.txt';
-    if (file_exists($log_file)) {
-        $log_content = file_get_contents($log_file);
+    WP_Filesystem();
+    global $wp_filesystem;
+
+    if ($wp_filesystem->exists($log_file)) {
+        $log_content = $wp_filesystem->get_contents($log_file);
     } else {
         $log_content = 'Log file is empty.';
     }
@@ -113,7 +134,7 @@ function advanced_404_to_301_log_page() {
     echo '<div class="wrap">';
     echo '<h2>404 to 301 Redirection Log</h2>';
     echo '<form method="post">';
-    wp_nonce_field('advanced-404-to-301-clear-log');
+    wp_nonce_field('advanced-404-to-301-clear-log', 'advanced_404_to_301_log_nonce');
     submit_button('Clear Log', 'secondary', 'clear_log', false);
     echo '</form>';
     echo '<pre>' . esc_html($log_content) . '</pre>';
@@ -125,3 +146,4 @@ function advanced_404_to_301_log_menu() {
     add_submenu_page('advanced-404-to-301', 'Redirection Log', 'View Log', 'manage_options', 'advanced-404-to-301-log', 'advanced_404_to_301_log_page');
 }
 add_action('admin_menu', 'advanced_404_to_301_log_menu');
+?>
