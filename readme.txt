@@ -1,61 +1,43 @@
-# Advanced 404 to 301 Redirection
-
-**Contributors:** Tarmo Trubetski  
-**Donate link:** [Support via PayPal](https://www.paypal.com/donate?business=support%40gameboss.eu&item_name=Support+Advanced+404+to+301+Redirection+Plugin&currency_code=USD)  
-**Tags:** redirect, 404, 301, log, error  
-**Requires at least:** 4.7  
-**Tested up to:** 5.4  
-**Stable tag:** 1.2  
-**Requires PHP:** 7.0  
-**License:** GPLv2 or later  
-**License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
-**Plugin URI:** https://github.com/lyhiz/Advanced-404-to-301-Redirection  
-**Author:** Tarmo Trubetski  
-**Author URI:** https://www.facebook.com/tarmo.trubetski  
+=== Advanced 404 to 301 Redirection ===
+Contributors: Tarmo Trubetski
+Tags: 404, redirect, 301, log
+Requires at least: 5.0
+Tested up to: 6.5.3
+Stable tag: 1.2
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Advanced 404 to 301 Redirection is a WordPress plugin that redirects 404 errors to specified URLs using 301 redirects and logs the redirections.
 
-## Installation
+== Description ==
 
-1. Upload the `advanced-404-to-301` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Navigate to '404 to 301' in the WordPress admin menu to configure the plugin settings.
+Advanced 404 to 301 Redirection helps you manage 404 errors by redirecting them to a specified URL using a 301 redirect. It also logs the redirections for you to review.
 
-## Frequently Asked Questions
+== Installation ==
 
-### How do I set the redirect URL for 404 errors?
+1. Upload the plugin files to the `/wp-content/plugins/advanced-404-to-301` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Use the Settings->404 to 301 screen to configure the plugin.
 
-To set the redirect URL for 404 errors, follow these steps:
-1. Go to the '404 to 301 Redirection' settings page in the WordPress admin menu.
-2. Enter the desired Redirect URL for 404 Errors.
-3. Click 'Save Changes.'
+== Frequently Asked Questions ==
 
-### How can I view the redirection log?
+= How do I set the redirect URL? =
+Go to Settings->404 to 301 and enter the URL you want to redirect 404 errors to.
 
-To view the redirection log, follow these steps:
-1. Navigate to the '404 to 301' submenu and click on 'View Log.'
-2. The log page displays the history of 404 redirects.
+= How can I view the redirection log? =
+Go to Settings->404 to 301 Log to view the log of 404 redirects.
 
-## Support
+== Screenshots ==
 
-If you find this plugin helpful, consider supporting us by making a donation via PayPal: [Support Advanced 404 to 301 Redirection Plugin](https://www.paypal.com/donate?business=support%40gameboss.eu&item_name=Support+Advanced+404+to+301+Redirection+Plugin&currency_code=USD)
+1. Settings page for 404 to 301 Redirection.
+2. Log page showing the history of 404 redirects.
 
-## Clear Log
+== Changelog ==
 
-To clear the redirection log, go to the '404 to 301 Redirection' settings page or the log page and click 'Clear Log.'
+= 1.2 =
+* Initial release.
 
-## Changelog
+== Upgrade Notice ==
 
-### 1.2
-
-- Improved performance and added additional features.
-- Fixed minor bugs.
-
-### 1.1
-
-- Added support for custom post types.
-- Enhanced security measures.
-
-### 1.0
-
-- Initial release.
+= 1.2 =
+Initial release.
